@@ -1,38 +1,33 @@
 import React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { connect, Provider } from 'react-redux';
+import { addNavigationHelpers } from 'react-navigation';
 
-import { Provider } from 'react-redux';
-import { connect } from 'react-redux';
-import store from './src/store.js';
-import LoginContainer from './src/containers/login.js';
+import store from './src/store';
+import AppNavigator from './src/navigator';
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <KeyboardAvoidingView behavior={"padding"} style={styles.container}>
-          <View style={styles.logoContainer}>
-          </View>
-          <View style={styles.formContainer}>
-            <LoginContainer />
-          </View>
-        </KeyboardAvoidingView>
-      </Provider>
+      <AppNavigator
+        navigation={addNavigationHelpers({ dispatch: this.props.dispatch, state: this.props.nav })}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#2b3e50',
-  },
-  formContainer: {
-    flex: 1,
-  },
-  logoContainer: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
+const mapStateToProps = (state) => ({
+  nav: state.nav,
 });
+
+const AppWithNavigationState = connect(mapStateToProps)(App);
+
+
+export default class Root extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppWithNavigationState />
+      </Provider>
+    );
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from 'react-native';
+
+import { NavigationActions } from 'react-navigation';
 
 
 export function changeLoginFormData(data) {
@@ -9,20 +10,37 @@ export function changeLoginFormData(data) {
   );
 }
 
+export function updateToken(token) {
+  return dispatch => (
+    dispatch({
+      type: 'UPDATE_TOKEN',
+      payload: token,
+    })
+  );
+}
+
+export function setToken(token) {
+  return AsyncStorage.setItem('auth_token', token);
+}
+
+export function getToken() {
+  return AsyncStorage.getItem('auth_token');
+}
+
 
 export function login(email, password) {
-  const url = `http://todogo.cloud/api/v1/auth/login/`;
+  const url = 'http://todogo.cloud/api/v1/auth/login/';
 
   return fetch(url, {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: email,
-      password: password,
-    })
+      email,
+      password,
+    }),
   });
 }
 
@@ -30,29 +48,26 @@ export function login(email, password) {
 export function Login(email, password) {
   return dispatch => (
     login(email, password)
-      .then((response) => response.json())
+      .then(response => response.json())
       .then(
         (body) => {
           console.log('!!!!!!!', body);
 
-          setToken(body.token).then(() => {});
+          setToken(body.token).then(() => {
+          });
 
-          dispatch({
-            type: 'LOGIN_REQUEST',
-            payload: body.token,
-          })
+          updateToken(body.token);
+          dispatch(NavigationActions.navigate({ routeName: 'TodoLists' }));
         })
       .catch((error) => {
-        console.error("ERROR: ", error);
+        console.error('ERROR: ', error);
       })
   );
 }
 
 
-export function setToken(token) {
-  return AsyncStorage.setItem('auth_token', token)
-}
-
-export function getToken() {
-  return AsyncStorage.getItem('auth_token');
+export function Navigate(routeName) {
+  return dispatch => (
+    dispatch(NavigationActions.navigate({ routeName }))
+  );
 }

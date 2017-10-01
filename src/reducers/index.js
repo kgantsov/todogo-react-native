@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import {loginReducer} from './login';
+
+import { loginReducer } from './login';
+import nav from './navigation';
 
 
 const reducersData = {
+  nav,
   loginReducer,
 };
 
@@ -17,8 +20,6 @@ Object.keys(reducersData).sort().forEach((reducer) => {
 const combinedReducer = combineReducers(reducers);
 
 // if new login the entire state of the app gets cleaned
-const rootReducer = (state, action) => {
-  return combinedReducer(state, action);
-};
+const rootReducer = (state, action) => combinedReducer(state, action);
 
 export default rootReducer;

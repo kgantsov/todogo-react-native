@@ -1,62 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity
-} from 'react-native';
-
-export default class Login extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <TextInput style={styles.input}
-                   placeholder={"Email"}
-                   keyboardType={"email-address"}
-                   returnKeyType={"next"}
-                   autoCapitalize={"none"}
-                   autoCorrect={false}
-                   onChangeText={(text) => {
-                     this.props.changeLoginFormData({
-                       ...this.props.loginReducer.loginForm,
-                       email: text
-                     })
-                   }}
-                   onSubmitEditing={() => this.passwordInput.focus()}
-                   value={this.props.loginReducer.loginForm.email} />
-        <TextInput style={styles.input}
-                   placeholder={"Password"}
-                   returnKeyType={"go"}
-                   onChangeText={(text) => {
-                     this.props.changeLoginFormData({
-                       ...this.props.loginReducer.loginForm,
-                       password: text
-                     })
-                   }}
-                   ref={(input) => this.passwordInput = input}
-                   value={this.props.loginReducer.loginForm.password}
-                   onSubmitEditing={() => this.props.Login(
-                     this.props.loginReducer.loginForm.email,
-                     this.props.loginReducer.loginForm.password
-                   )}
-                   secureTextEntry={true} />
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => {
-            console.log('+++_____+++');
-            this.props.Login(
-              this.props.loginReducer.loginForm.email,
-              this.props.loginReducer.loginForm.password
-            )
-          }}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,10 +15,67 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: '#5cb85c',
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   buttonText: {
     textAlign: 'center',
-    paddingVertical: 5
+    paddingVertical: 5,
   },
 });
+
+export default class Login extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder={'Email'}
+          keyboardType={'email-address'}
+          returnKeyType={'next'}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          onChangeText={(text) => {
+            this.props.changeLoginFormData({
+              ...this.props.loginReducer.loginForm,
+              email: text,
+            });
+          }}
+          onSubmitEditing={() => this.passwordInput.focus()}
+          value={this.props.loginReducer.loginForm.email}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={'Password'}
+          returnKeyType={'go'}
+          onChangeText={(text) => {
+            this.props.changeLoginFormData({
+              ...this.props.loginReducer.loginForm,
+              password: text,
+            });
+          }}
+          ref={(input) => { this.passwordInput = input; }}
+          value={this.props.loginReducer.loginForm.password}
+          onSubmitEditing={() => this.props.Login(
+            this.props.loginReducer.loginForm.email,
+            this.props.loginReducer.loginForm.password,
+          )}
+          secureTextEntry={true}
+        />
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => {
+            console.log('+++_____+++');
+            this.props.Login(
+              this.props.loginReducer.loginForm.email,
+              this.props.loginReducer.loginForm.password,
+            ).then(() => {
+              console.log('<<<<<<>>>>>');
+            });
+          }}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}

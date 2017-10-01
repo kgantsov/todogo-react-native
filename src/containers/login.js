@@ -1,17 +1,17 @@
-import React from 'react';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeLoginFormData, Login } from '../actions/login';
-import LoginComponent from '../components/login.js';
+import { changeLoginFormData, Login, Navigate } from '../actions/login';
+import LoginComponent from '../components/login';
 
 const mapStateToProps = state => ({
-  ...state
+  ...state,
 });
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   changeLoginFormData,
   Login,
+  Navigate,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
