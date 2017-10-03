@@ -23,29 +23,29 @@ export function fetchTodoLists(token) {
 
 
 export function FetchTodoLists(email, password) {
-  return dispatch => (
+  return (dispatch) => {
+    dispatch({ type: 'UPDATE_LOADING_FLAG', payload: true });
+
     fetchTodoLists(email, password)
       .then((response) => {
         console.log('<<<<<<<<!!!!!!', response.status, response);
-        if (response.status === 401) {
-          console.error('ERROR: ', response.status);
-          dispatch(NavigationActions.navigate({ routeName: 'Login' }));
-        } else {
+        if (response.status === 200) {
           response.json().then(
             (body) => {
-              console.log('!!!!!!!', body);
+              console.log('!!!!!!!:::->', body);
 
-              // setToken(body.token).then(() => {});
-
-              // dispatch(NavigationActions.navigate({ routeName: 'TodoLists' }))
-              updateTodoLists(body);
+              dispatch({ type: 'UPDATE_LOADING_FLAG', payload: false });
+              dispatch({ type: 'UPDATE_TODO_LISTS', payload: body });
             },
           );
+        } else {
+          console.log('ERROR: ', response.status);
+          dispatch(NavigationActions.navigate({ routeName: 'Login' }));
         }
       })
       .catch((error) => {
-        console.error('ERROR: ', error);
+        console.log('ERROR: ', error);
         dispatch(NavigationActions.navigate({ routeName: 'Login' }));
-      })
-  );
+      });
+  };
 }

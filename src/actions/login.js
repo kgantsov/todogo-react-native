@@ -12,10 +12,7 @@ export function changeLoginFormData(data) {
 
 export function updateToken(token) {
   return dispatch => (
-    dispatch({
-      type: 'UPDATE_TOKEN',
-      payload: token,
-    })
+    dispatch({ type: 'UPDATE_TOKEN', payload: token })
   );
 }
 
@@ -56,7 +53,7 @@ export function Login(email, password) {
           setToken(body.token).then(() => {
           });
 
-          updateToken(body.token);
+          dispatch({ type: 'UPDATE_TOKEN', payload: body.token });
           dispatch(NavigationActions.navigate({ routeName: 'TodoLists' }));
         })
       .catch((error) => {

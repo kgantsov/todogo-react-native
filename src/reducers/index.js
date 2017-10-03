@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 
 import { loginReducer } from './login';
+import { todosReducer } from './todo_lists';
 import nav from './navigation';
 
 
 const reducersData = {
   nav,
   loginReducer,
+  todosReducer,
 };
 
 const reducers = {};

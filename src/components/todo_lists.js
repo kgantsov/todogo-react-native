@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { getToken } from '../actions/login';
+
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    flex: 1,
+    paddingTop: 22,
   },
   input: {
     padding: 10,
@@ -22,6 +25,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 5,
   },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
 });
 
 export default class TodoLists extends Component {
@@ -30,6 +38,9 @@ export default class TodoLists extends Component {
     const { token } = this.props.loginReducer;
     const { Navigate } = this.props;
 
+    this.handleRefresh = this.handleRefresh.bind(this);
+
+    console.log('........', token, this.props, this.props.todosReducer.todoLists);
     if (token === null) {
       getToken().then((token) => {
         if (token) {
@@ -44,10 +55,37 @@ export default class TodoLists extends Component {
     }
   }
 
+  handleRefresh() {
+    const { FetchTodoLists } = this.props;
+    const { token } = this.props.loginReducer;
+    FetchTodoLists(token);
+  }
+
+  renderSeparator() {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: '100%',
+          backgroundColor: '#CED0CE',
+        }}
+      />
+    );
+  }
+
   render() {
+    const { todoLists, loading } = this.props.todosReducer;
+
     return (
       <View style={styles.container}>
-        <Text>Todo lists</Text>
+        <View><Text>Todos list</Text></View>
+        <FlatList
+          data={todoLists}
+          ItemSeparatorComponent={this.renderSeparator}
+          onRefresh={this.handleRefresh}
+          refreshing={loading}
+          renderItem={({ item }) => <Text key={item.id} style={styles.item}>{item.title}</Text>}
+        />
       </View>
     );
   }
