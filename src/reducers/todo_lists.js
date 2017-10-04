@@ -1,6 +1,9 @@
 export const initialState = {
   todoLists: [],
   loading: false,
+  todoListFormData: {
+    title: null,
+  },
 };
 
 export const todosReducer = (state = initialState, action) => {
@@ -14,6 +17,11 @@ export const todosReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case 'UPDATE_TODO_LIST_FORM_DATA':
+      return {
+        ...state,
+        todoListFormData: action.payload,
       };
     default:
       return state;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 10,
-    // width: 250,
     height: 50,
     marginBottom: 20,
     backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Login extends Component {
+class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -64,12 +63,10 @@ export default class Login extends Component {
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => {
-            console.log('+++_____+++');
             this.props.Login(
               this.props.loginReducer.loginForm.email,
               this.props.loginReducer.loginForm.password,
             ).then(() => {
-              console.log('<<<<<<>>>>>');
             });
           }}
         >
@@ -79,3 +76,18 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  changeLoginFormData: React.PropTypes.func.isRequired,
+  Login: React.PropTypes.func.isRequired,
+  loginReducer: React.PropTypes.shape({
+    token: React.PropTypes.string.isRequired,
+    loginForm: React.PropTypes.shape({
+      email: React.PropTypes.string.isRequired,
+      password: React.PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
+
+
+export default Login;

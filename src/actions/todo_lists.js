@@ -7,6 +7,11 @@ export function updateTodoLists(data) {
   );
 }
 
+export function updateTodoListFormData(data) {
+  return dispatch => (
+    dispatch({ type: 'UPDATE_TODO_LIST_FORM_DATA', payload: data })
+  );
+}
 
 export function fetchTodoLists(token) {
   const url = 'http://todogo.cloud/api/v1/list/';
@@ -22,18 +27,15 @@ export function fetchTodoLists(token) {
 }
 
 
-export function FetchTodoLists(email, password) {
+export function FetchTodoLists(token) {
   return (dispatch) => {
     dispatch({ type: 'UPDATE_LOADING_FLAG', payload: true });
 
-    fetchTodoLists(email, password)
+    fetchTodoLists(token)
       .then((response) => {
-        console.log('<<<<<<<<!!!!!!', response.status, response);
         if (response.status === 200) {
           response.json().then(
             (body) => {
-              console.log('!!!!!!!:::->', body);
-
               dispatch({ type: 'UPDATE_LOADING_FLAG', payload: false });
               dispatch({ type: 'UPDATE_TODO_LISTS', payload: body });
             },
@@ -47,5 +49,36 @@ export function FetchTodoLists(email, password) {
         console.log('ERROR: ', error);
         dispatch(NavigationActions.navigate({ routeName: 'Login' }));
       });
+  };
+}
+
+export function CreateTodoList(token, data) {
+  return (dispatch) => {
+    const url = 'http://todogo.cloud/api/v1/list/';
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Auth-Token': token,
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status === 201) {
+        response.json().then(
+          () => {
+            dispatch(FetchTodoLists(token));
+            dispatch(updateTodoListFormData({}));
+          },
+        );
+      } else {
+        console.log('ERROR: ', response.status);
+        dispatch(NavigationActions.navigate({ routeName: 'Login' }));
+      }
+    }).catch((error) => {
+      console.log('ERROR: ', error);
+      dispatch(NavigationActions.navigate({ routeName: 'Login' }));
+    });
   };
 }

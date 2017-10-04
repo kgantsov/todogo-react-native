@@ -1,7 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateToken, Navigate } from '../actions/login';
-import { updateTodoLists, FetchTodoLists } from '../actions/todo_lists';
+import {
+  updateTodoLists,
+  FetchTodoLists,
+  updateTodoListFormData,
+  CreateTodoList,
+ } from '../actions/todo_lists';
 import TodoLists from '../components/todo_lists';
 
 const mapStateToProps = state => ({
@@ -14,6 +19,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   FetchTodoLists,
   updateToken,
   Navigate,
+  updateTodoListFormData,
+  CreateTodoList,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoLists);

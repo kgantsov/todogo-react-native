@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, TextInput, Text, View } from 'react-native';
 import { getToken } from '../actions/login';
 
 
@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 10,
-    // width: 250,
     height: 50,
     marginBottom: 20,
     backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -30,9 +29,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
+  itemSeparator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#414c59',
+  },
 });
 
-export default class TodoLists extends Component {
+class TodoLists extends Component {
   componentDidMount() {
     const { FetchTodoLists, updateToken } = this.props;
     const { token } = this.props.loginReducer;
@@ -40,12 +44,11 @@ export default class TodoLists extends Component {
 
     this.handleRefresh = this.handleRefresh.bind(this);
 
-    console.log('........', token, this.props, this.props.todosReducer.todoLists);
     if (token === null) {
-      getToken().then((token) => {
-        if (token) {
-          updateToken(token);
-          FetchTodoLists(token);
+      getToken().then((tokenFromStorage) => {
+        if (tokenFromStorage) {
+          updateToken(tokenFromStorage);
+          FetchTodoLists(tokenFromStorage);
         } else {
           Navigate('Login');
         }
@@ -61,32 +64,60 @@ export default class TodoLists extends Component {
     FetchTodoLists(token);
   }
 
-  renderSeparator() {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: '100%',
-          backgroundColor: '#CED0CE',
-        }}
-      />
-    );
-  }
-
   render() {
     const { todoLists, loading } = this.props.todosReducer;
 
     return (
       <View style={styles.container}>
-        <View><Text>Todos list</Text></View>
+        <TextInput
+          style={styles.input}
+          placeholder={'Create a todo list'}
+          returnKeyType={'go'}
+          onChangeText={(text) => {
+            this.props.updateTodoListFormData({
+              ...this.props.todosReducer.todoListFormData,
+              title: text,
+            });
+          }}
+          value={this.props.todosReducer.todoListFormData.title}
+          onSubmitEditing={() => this.props.CreateTodoList(
+            this.props.loginReducer.token,
+            this.props.todosReducer.todoListFormData,
+          )}
+        />
         <FlatList
           data={todoLists}
-          ItemSeparatorComponent={this.renderSeparator}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
           onRefresh={this.handleRefresh}
           refreshing={loading}
-          renderItem={({ item }) => <Text key={item.id} style={styles.item}>{item.title}</Text>}
+          renderItem={({ item }) => (
+            <Text key={`todo_list_${item.id}`} style={styles.item}>{item.title}</Text>
+          )}
         />
       </View>
     );
   }
 }
+
+TodoLists.propTypes = {
+  FetchTodoLists: React.PropTypes.func.isRequired,
+  updateToken: React.PropTypes.func.isRequired,
+  Navigate: React.PropTypes.func.isRequired,
+  updateTodoListFormData: React.PropTypes.func.isRequired,
+  CreateTodoList: React.PropTypes.func.isRequired,
+  loginReducer: React.PropTypes.shape({
+    token: React.PropTypes.string,
+  }).isRequired,
+  todosReducer: React.PropTypes.shape({
+    loading: React.PropTypes.boolean,
+    todoLists: React.PropTypes.array.isRequired,
+    todoListFormData: React.PropTypes.shape({
+      title: React.PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+
+export default TodoLists;
