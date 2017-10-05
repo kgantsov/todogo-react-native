@@ -13,6 +13,12 @@ export function updateTodoListFormData(data) {
   );
 }
 
+export function openTodoList(todoListId) {
+  return (dispatch) => {
+    console.log('..........', todoListId, dispatch);
+  };
+}
+
 export function fetchTodoLists(token) {
   const url = 'http://todogo.cloud/api/v1/list/';
 

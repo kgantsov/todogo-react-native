@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, TextInput, Text, View } from 'react-native';
+import { FlatList, StyleSheet, TextInput, View } from 'react-native';
 import { getToken } from '../actions/login';
+import TodoListItem from './todo_list_item';
 
 
 const styles = StyleSheet.create({
@@ -24,17 +25,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 5,
   },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
   itemSeparator: {
     height: 1,
     width: '100%',
     backgroundColor: '#414c59',
   },
 });
+
 
 class TodoLists extends Component {
   componentDidMount() {
@@ -92,8 +89,13 @@ class TodoLists extends Component {
           )}
           onRefresh={this.handleRefresh}
           refreshing={loading}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Text key={`todo_list_${item.id}`} style={styles.item}>{item.title}</Text>
+            <TodoListItem
+              onPressItem={this.props.openTodoList}
+              id={item.id}
+              title={item.title}
+            />
           )}
         />
       </View>

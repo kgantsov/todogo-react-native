@@ -83,8 +83,8 @@ Login.propTypes = {
   loginReducer: React.PropTypes.shape({
     token: React.PropTypes.string.isRequired,
     loginForm: React.PropTypes.shape({
-      email: React.PropTypes.string.isRequired,
-      password: React.PropTypes.string.isRequired,
+      email: React.PropTypes.string,
+      password: React.PropTypes.string,
     }),
   }).isRequired,
 };
