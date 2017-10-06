@@ -59,3 +59,9 @@ typings/
 
 
 yarn.lock
+
+.DS_Store
+.expo/
+.idea/
+.watchmanconfig
+.python-version

@@ -7,7 +7,7 @@ import {
   updateTodoListFormData,
   CreateTodoList,
   openTodoList,
- } from '../actions/todo_lists';
+} from '../actions/todo_lists';
 import TodoLists from '../components/todo_lists';
 
 const mapStateToProps = state => ({
