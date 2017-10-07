@@ -45,24 +45,23 @@ class TodoLists extends Component {
       getToken().then((tokenFromStorage) => {
         if (tokenFromStorage) {
           updateToken(tokenFromStorage);
-          FetchTodoLists(tokenFromStorage);
+          FetchTodoLists();
         } else {
           Navigate('Login');
         }
       });
     } else {
-      FetchTodoLists(token);
+      FetchTodoLists();
     }
   }
 
   handleRefresh() {
     const { FetchTodoLists } = this.props;
-    const { token } = this.props.loginReducer;
-    FetchTodoLists(token);
+    FetchTodoLists();
   }
 
   render() {
-    const { todoLists, loading } = this.props.todosReducer;
+    const { todoLists, loading } = this.props.todoListsReducer;
 
     return (
       <View style={styles.container}>
@@ -72,14 +71,13 @@ class TodoLists extends Component {
           returnKeyType={'go'}
           onChangeText={(text) => {
             this.props.updateTodoListFormData({
-              ...this.props.todosReducer.todoListFormData,
+              ...this.props.todoListsReducer.todoListFormData,
               title: text,
             });
           }}
-          value={this.props.todosReducer.todoListFormData.title}
+          value={this.props.todoListsReducer.todoListFormData.title}
           onSubmitEditing={() => this.props.CreateTodoList(
-            this.props.loginReducer.token,
-            this.props.todosReducer.todoListFormData,
+            this.props.todoListsReducer.todoListFormData,
           )}
         />
         <FlatList
@@ -93,8 +91,8 @@ class TodoLists extends Component {
           renderItem={({ item }) => (
             <TodoListItem
               onPressItem={this.props.openTodoList}
-              id={item.id}
-              title={item.title}
+              onDeleteItem={this.props.deleteTodoList}
+              {...item}
             />
           )}
         />
@@ -112,7 +110,7 @@ TodoLists.propTypes = {
   loginReducer: React.PropTypes.shape({
     token: React.PropTypes.string,
   }).isRequired,
-  todosReducer: React.PropTypes.shape({
+  todoListsReducer: React.PropTypes.shape({
     loading: React.PropTypes.boolean,
     todoLists: React.PropTypes.array.isRequired,
     todoListFormData: React.PropTypes.shape({

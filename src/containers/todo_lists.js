@@ -7,6 +7,7 @@ import {
   updateTodoListFormData,
   CreateTodoList,
   openTodoList,
+  deleteTodoList,
 } from '../actions/todo_lists';
 import TodoLists from '../components/todo_lists';
 
@@ -23,6 +24,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   updateTodoListFormData,
   CreateTodoList,
   openTodoList,
+  deleteTodoList,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoLists);
