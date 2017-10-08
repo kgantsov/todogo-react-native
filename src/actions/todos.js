@@ -1,35 +1,30 @@
 import { NavigationActions } from 'react-navigation';
 import store from '../store';
-import { updateTodoListId } from './todos';
 
 
-export function updateTodoLists(data) {
+export function updateTodos(data) {
   return dispatch => (
-    dispatch({ type: 'UPDATE_TODO_LISTS', payload: data })
+    dispatch({ type: 'UPDATE_TODOS', payload: data })
   );
 }
 
-export function updateTodoListFormData(data) {
+export function updateTodoListId(todoListId) {
   return dispatch => (
-    dispatch({ type: 'UPDATE_TODO_LIST_FORM_DATA', payload: data })
+    dispatch({ type: 'UPDATE_TODO_LIST_ID', payload: todoListId })
   );
 }
 
-export function openTodoList(todoListId) {
-  return (dispatch) => {
-    console.log('..........', todoListId, dispatch);
-
-    dispatch(updateTodoListId(todoListId));
-    dispatch(NavigationActions.navigate({ routeName: 'Todos' }));
-  };
+export function updateTodoFormData(data) {
+  return dispatch => (
+    dispatch({ type: 'UPDATE_TODO_FORM_DATA', payload: data })
+  );
 }
 
-export function FetchTodoLists() {
+export function fetchTodos(todoListId) {
   return (dispatch) => {
-    dispatch({ type: 'UPDATE_LOADING_FLAG', payload: true });
-
+    dispatch({ type: 'UPDATE_TODOS_LOADING_FLAG', payload: true });
     const { token } = store.getState().loginReducer;
-    const url = 'http://todogo.cloud/api/v1/list/';
+    const url = `http://todogo.cloud/api/v1/list/${todoListId}/todo/`;
 
     fetch(url, {
       method: 'GET',
@@ -42,8 +37,8 @@ export function FetchTodoLists() {
       if (response.status === 200) {
         response.json().then(
           (body) => {
-            dispatch({ type: 'UPDATE_LOADING_FLAG', payload: false });
-            dispatch(updateTodoLists(body));
+            dispatch({ type: 'UPDATE_TODOS_LOADING_FLAG', payload: false });
+            dispatch(updateTodos(body));
           },
         );
       } else {
@@ -57,9 +52,9 @@ export function FetchTodoLists() {
   };
 }
 
-export function CreateTodoList(data) {
+export function createTodo(todoListId, data) {
   return (dispatch) => {
-    const url = 'http://todogo.cloud/api/v1/list/';
+    const url = `http://todogo.cloud/api/v1/list/${todoListId}/todo/`;
     const { token } = store.getState().loginReducer;
 
     fetch(url, {
@@ -69,13 +64,17 @@ export function CreateTodoList(data) {
         'Content-Type': 'application/json',
         'Auth-Token': token,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        completed: false,
+        note: '',
+        ...data,
+      }),
     }).then((response) => {
       if (response.status === 201) {
         response.json().then(
           () => {
-            dispatch(FetchTodoLists());
-            dispatch(updateTodoListFormData({}));
+            dispatch(fetchTodos(todoListId));
+            dispatch(updateTodoFormData({}));
           },
         );
       } else {
@@ -89,9 +88,9 @@ export function CreateTodoList(data) {
   };
 }
 
-export function deleteTodoList(todoId) {
+export function deleteTodo(todoListId, todoId) {
   return (dispatch) => {
-    const url = `http://todogo.cloud/api/v1/list/${todoId}/`;
+    const url = `http://todogo.cloud/api/v1/list/${todoListId}/todo/${todoId}/`;
     const { token } = store.getState().loginReducer;
 
     fetch(url, {
@@ -103,7 +102,7 @@ export function deleteTodoList(todoId) {
       },
     }).then((response) => {
       if (response.status === 204) {
-        dispatch(FetchTodoLists());
+        dispatch(fetchTodos(todoListId));
       } else {
         console.log('ERROR: ', response.status);
         dispatch(NavigationActions.navigate({ routeName: 'Login' }));

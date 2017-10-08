@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import { loginReducer } from './login';
 import { todoListsReducer } from './todo_lists';
+import { todosReducer } from './todos';
 import nav from './navigation';
 
 
@@ -9,6 +10,7 @@ const reducersData = {
   nav,
   loginReducer,
   todoListsReducer,
+  todosReducer,
 };
 
 const reducers = {};
