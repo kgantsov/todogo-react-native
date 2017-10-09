@@ -88,6 +88,41 @@ export function createTodo(todoListId, data) {
   };
 }
 
+export function toggleCompletedTodo(data, completed) {
+  return (dispatch) => {
+    const url = `http://todogo.cloud/api/v1/list/${data.todo_list_id}/todo/${data.id}/`;
+    const { token } = store.getState().loginReducer;
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Auth-Token': token,
+      },
+      body: JSON.stringify({
+        ...data,
+        completed,
+      }),
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then(
+          () => {
+            dispatch(fetchTodos(data.todo_list_id));
+            dispatch(updateTodoFormData({}));
+          },
+        );
+      } else {
+        console.log('ERROR: ', response.status);
+        dispatch(NavigationActions.navigate({ routeName: 'Login' }));
+      }
+    }).catch((error) => {
+      console.log('ERROR: ', error);
+      dispatch(NavigationActions.navigate({ routeName: 'Login' }));
+    });
+  };
+}
+
 export function deleteTodo(todoListId, todoId) {
   return (dispatch) => {
     const url = `http://todogo.cloud/api/v1/list/${todoListId}/todo/${todoId}/`;

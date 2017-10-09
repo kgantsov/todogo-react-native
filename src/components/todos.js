@@ -96,7 +96,8 @@ class Todos extends Component {
             <TodoItem
               onPressItem={this.props.openTodo}
               onDeleteItem={this.props.deleteTodo}
-              {...item}
+              toggleCompletedTodo={this.props.toggleCompletedTodo}
+              item={item}
             />
           )}
         />

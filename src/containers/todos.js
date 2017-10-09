@@ -6,6 +6,7 @@ import {
   fetchTodos,
   updateTodoFormData,
   createTodo,
+  toggleCompletedTodo,
   deleteTodo,
 } from '../actions/todos';
 import Todos from '../components/todos';
@@ -22,6 +23,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   Navigate,
   updateTodoFormData,
   createTodo,
+  toggleCompletedTodo,
   deleteTodo,
 }, dispatch);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import CheckBox from './checkbox';
 
 const styles = StyleSheet.create({
   item: {
@@ -23,26 +24,27 @@ class TodoItem extends React.PureComponent {
     this.handleLongPress = this.handleLongPress.bind(this);
 
     this.handleDeletePress = this.handleDeletePress.bind(this);
-    this.handleTriggerComplete = this.handleTriggerComplete.bind(this);
+    this.handleToggleComplete = this.handleToggleComplete.bind(this);
   }
 
   handlePress = () => {
-    console.log('..........>>>>>', this.props.id);
+    console.log('..........>>>>>', this.props.item.id);
     // this.props.onPressItem(this.props.id);
   };
 
   handleLongPress = () => {
-    console.log('..........----->>>>>', this.props.id);
+    console.log('..........----->>>>>', this.props.item.id);
     // this.props.onLongPressItem(this.props.id);
   };
 
   handleDeletePress = () => {
-    console.log('..........=====DEL>>>>>', this.props.todo_list_id, this.props.id, this.props);
-    this.props.onDeleteItem(this.props.todo_list_id, this.props.id);
+    console.log('..........=====DEL>>>>>', this.props.item.todo_list_id, this.props.id, this.props);
+    this.props.onDeleteItem(this.props.item.todo_list_id, this.props.item.id);
   };
 
-  handleTriggerComplete = (v) => {
-    console.log('..........=====COMPLETED>>>>>', this.props, v);
+  handleToggleComplete = (value) => {
+    console.log('..........=====COMPLETED>>>>>', this.props, value);
+    this.props.toggleCompletedTodo(this.props.item, value);
   };
 
   render() {
@@ -53,7 +55,13 @@ class TodoItem extends React.PureComponent {
         onLongPress={this.handleLongPress}
         style={styles.container}
       >
-        <Text style={styles.item}>{this.props.title}</Text>
+        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
+          <CheckBox
+            value={this.props.item.completed}
+            onChange={this.handleToggleComplete}
+          />
+          <Text style={styles.item}>{this.props.item.title}</Text>
+        </View>
         <Icon name="trash" size={25} color="#fff" onPress={this.handleDeletePress} />
       </TouchableOpacity>
     );
