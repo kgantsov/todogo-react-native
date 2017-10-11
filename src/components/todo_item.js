@@ -18,6 +18,17 @@ const styles = StyleSheet.create({
   },
 });
 
+const priorityColors = {
+  1: '#58a264',
+  2: '#70b55b',
+  3: '#8eaf52',
+  4: '#cca54a',
+  5: '#bd8040',
+  6: '#c16c41',
+  7: '#d06046',
+  8: '#d24747',
+};
+
 class TodoItem extends React.PureComponent {
   componentDidMount() {
     this.handlePress = this.handlePress.bind(this);
@@ -59,6 +70,7 @@ class TodoItem extends React.PureComponent {
           <CheckBox
             value={this.props.item.completed}
             onChange={this.handleToggleComplete}
+            color={priorityColors[this.props.item.priority]}
           />
           <Text style={styles.item}>{this.props.item.title}</Text>
         </View>
