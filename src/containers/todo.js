@@ -4,13 +4,14 @@ import { updateToken, Navigate } from '../actions/login';
 import {
   updateTodos,
   fetchTodos,
-  updateTodoFormData,
+  updateTodo,
+  saveTodo,
   createTodo,
   openTodo,
   toggleCompletedTodo,
   deleteTodo,
 } from '../actions/todos';
-import Todos from '../components/todos';
+import Todo from '../components/todo';
 
 const mapStateToProps = state => ({
   ...state,
@@ -22,11 +23,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchTodos,
   updateToken,
   Navigate,
-  updateTodoFormData,
+  updateTodo,
+  saveTodo,
   createTodo,
   openTodo,
   toggleCompletedTodo,
   deleteTodo,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todos);
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

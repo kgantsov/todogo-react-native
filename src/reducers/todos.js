@@ -2,6 +2,7 @@ export const initialState = {
   todos: [],
   loading: false,
   todoListId: null,
+  todo: null,
   todoFormData: {
     title: null,
   },
@@ -18,6 +19,11 @@ export const todosReducer = (state = initialState, action) => {
       return {
         ...state,
         todoListId: action.payload,
+      };
+    case 'UPDATE_TODO':
+      return {
+        ...state,
+        todo: action.payload,
       };
     case 'UPDATE_TODOS_LOADING_FLAG':
       return {

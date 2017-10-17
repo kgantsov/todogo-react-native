@@ -14,11 +14,25 @@ export function updateTodoListId(todoListId) {
   );
 }
 
+export function updateTodo(todo) {
+  return dispatch => (
+    dispatch({ type: 'UPDATE_TODO', payload: todo })
+  );
+}
+
 export function updateTodoFormData(data) {
   return dispatch => (
     dispatch({ type: 'UPDATE_TODO_FORM_DATA', payload: data })
   );
 }
+
+export function openTodo(todo) {
+  return (dispatch) => {
+    dispatch(updateTodo(todo));
+    dispatch(NavigationActions.navigate({ routeName: 'Todo' }));
+  };
+}
+
 
 export function fetchTodos(todoListId) {
   return (dispatch) => {
@@ -110,6 +124,37 @@ export function toggleCompletedTodo(data, completed) {
           () => {
             dispatch(fetchTodos(data.todo_list_id));
             dispatch(updateTodoFormData({}));
+          },
+        );
+      } else {
+        console.log('ERROR: ', response.status);
+        dispatch(NavigationActions.navigate({ routeName: 'Login' }));
+      }
+    }).catch((error) => {
+      console.log('ERROR: ', error);
+      dispatch(NavigationActions.navigate({ routeName: 'Login' }));
+    });
+  };
+}
+
+export function saveTodo(data) {
+  return (dispatch) => {
+    const url = `http://todogo.cloud/api/v1/list/${data.todo_list_id}/todo/${data.id}/`;
+    const { token } = store.getState().loginReducer;
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Auth-Token': token,
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then(
+          () => {
+            dispatch(NavigationActions.navigate({ routeName: 'Todos' }));
           },
         );
       } else {

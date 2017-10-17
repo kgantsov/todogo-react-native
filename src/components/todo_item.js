@@ -39,8 +39,7 @@ class TodoItem extends React.PureComponent {
   }
 
   handlePress = () => {
-    console.log('..........>>>>>', this.props.item.id);
-    // this.props.onPressItem(this.props.id);
+    this.props.onPressItem(this.props.item);
   };
 
   handleLongPress = () => {
@@ -49,12 +48,10 @@ class TodoItem extends React.PureComponent {
   };
 
   handleDeletePress = () => {
-    console.log('..........=====DEL>>>>>', this.props.item.todo_list_id, this.props.id, this.props);
     this.props.onDeleteItem(this.props.item.todo_list_id, this.props.item.id);
   };
 
   handleToggleComplete = (value) => {
-    console.log('..........=====COMPLETED>>>>>', this.props, value);
     this.props.toggleCompletedTodo(this.props.item, value);
   };
 
