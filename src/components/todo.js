@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, View, DatePickerIOS } from 'react-native';
 import { getToken } from '../actions/login';
 
 
@@ -88,6 +88,12 @@ class Todo extends Component {
           }}
           value={this.props.todosReducer.todo.note}
         />
+        <DatePickerIOS
+          date={new Date()}
+          onDateChange={(date) => {
+            console.log('>>>>>', date);
+          }}
+        />
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => {
@@ -103,6 +109,7 @@ class Todo extends Component {
 
 Todo.propTypes = {
   fetchTodos: React.PropTypes.func.isRequired,
+  saveTodo: React.PropTypes.func.isRequired,
   updateToken: React.PropTypes.func.isRequired,
   Navigate: React.PropTypes.func.isRequired,
   updateTodo: React.PropTypes.func.isRequired,
@@ -110,11 +117,13 @@ Todo.propTypes = {
     token: React.PropTypes.string,
   }).isRequired,
   todosReducer: React.PropTypes.shape({
+    todoListId: React.PropTypes.string.isRequired,
     loading: React.PropTypes.boolean,
     todos: React.PropTypes.array.isRequired,
     todo: React.PropTypes.shape({
       title: React.PropTypes.string,
       priority: React.PropTypes.string,
+      note: React.PropTypes.string,
     }),
   }).isRequired,
 };

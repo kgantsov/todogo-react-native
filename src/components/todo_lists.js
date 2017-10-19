@@ -104,6 +104,8 @@ class TodoLists extends Component {
 TodoLists.propTypes = {
   FetchTodoLists: React.PropTypes.func.isRequired,
   updateToken: React.PropTypes.func.isRequired,
+  openTodoList: React.PropTypes.func.isRequired,
+  deleteTodoList: React.PropTypes.func.isRequired,
   Navigate: React.PropTypes.func.isRequired,
   updateTodoListFormData: React.PropTypes.func.isRequired,
   CreateTodoList: React.PropTypes.func.isRequired,

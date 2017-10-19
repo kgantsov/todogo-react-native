@@ -77,4 +77,18 @@ class TodoItem extends React.PureComponent {
   }
 }
 
+TodoItem.propTypes = {
+  onPressItem: React.PropTypes.func.isRequired,
+  onDeleteItem: React.PropTypes.func.isRequired,
+  toggleCompletedTodo: React.PropTypes.func.isRequired,
+  Navigate: React.PropTypes.func.isRequired,
+  item: React.PropTypes.shape({
+    id: React.PropTypes.string,
+    todo_list_id: React.PropTypes.string,
+    completed: React.PropTypes.bool,
+    priority: React.PropTypes.string,
+    title: React.PropTypes.string,
+  }).isRequired,
+};
+
 export default TodoItem;

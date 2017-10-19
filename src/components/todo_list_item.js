@@ -26,7 +26,6 @@ class TodoListItem extends React.PureComponent {
   }
 
   handlePress = () => {
-    console.log('..........>>>>>', this.props.id);
     this.props.onPressItem(this.props.id);
   }
 
@@ -36,7 +35,6 @@ class TodoListItem extends React.PureComponent {
   }
 
   handleDeletePress = () => {
-    console.log('..........=====DEL>>>>>', this.props.id);
     this.props.onDeleteItem(this.props.id);
   }
 
@@ -54,5 +52,13 @@ class TodoListItem extends React.PureComponent {
     );
   }
 }
+
+TodoListItem.propTypes = {
+  onPressItem: React.PropTypes.func.isRequired,
+  onDeleteItem: React.PropTypes.func.isRequired,
+  id: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  Navigate: React.PropTypes.func.isRequired,
+};
 
 export default TodoListItem;

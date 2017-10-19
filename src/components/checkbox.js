@@ -41,7 +41,8 @@ CheckBox.propTypes = {
   value: React.PropTypes.bool,
   size: React.PropTypes.number,
   color: React.PropTypes.string,
-  onChange: React.PropTypes.func,
+  style: React.PropTypes.string.isRequired,
+  onChange: React.PropTypes.func.isRequired,
 };
 
 export default CheckBox;
