@@ -38,22 +38,22 @@ class TodoItem extends React.PureComponent {
     this.handleToggleComplete = this.handleToggleComplete.bind(this);
   }
 
-  handlePress = () => {
+  handlePress() {
     this.props.onPressItem(this.props.item);
-  };
+  }
 
-  handleLongPress = () => {
+  handleLongPress() {
     console.log('..........----->>>>>', this.props.item.id);
     // this.props.onLongPressItem(this.props.id);
-  };
+  }
 
-  handleDeletePress = () => {
+  handleDeletePress() {
     this.props.onDeleteItem(this.props.item.todo_list_id, this.props.item.id);
-  };
+  }
 
-  handleToggleComplete = (value) => {
+  handleToggleComplete(value) {
     this.props.toggleCompletedTodo(this.props.item, value);
-  };
+  }
 
   render() {
     return (

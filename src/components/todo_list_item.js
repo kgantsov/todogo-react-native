@@ -25,16 +25,16 @@ class TodoListItem extends React.PureComponent {
     this.handleDeletePress = this.handleDeletePress.bind(this);
   }
 
-  handlePress = () => {
+  handlePress() {
     this.props.onPressItem(this.props.id);
   }
 
-  handleLongPress = () => {
+  handleLongPress() {
     console.log('..........----->>>>>', this.props.id);
     // this.props.onLongPressItem(this.props.id);
   }
 
-  handleDeletePress = () => {
+  handleDeletePress() {
     this.props.onDeleteItem(this.props.id);
   }
 

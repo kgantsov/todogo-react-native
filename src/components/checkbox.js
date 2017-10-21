@@ -8,9 +8,9 @@ class CheckBox extends React.PureComponent {
     this.handlePress = this.handlePress.bind(this);
   }
 
-  handlePress = () => {
+  handlePress() {
     this.props.onChange(!this.props.value);
-  };
+  }
 
   render() {
     const icon = (this.props.value) ? 'check-square-o' : 'square-o';

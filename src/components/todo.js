@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Text, TouchableOpacity, View, DatePickerIOS } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
 import { getToken } from '../actions/login';
 
 
@@ -87,12 +87,6 @@ class Todo extends Component {
             });
           }}
           value={this.props.todosReducer.todo.note}
-        />
-        <DatePickerIOS
-          date={new Date()}
-          onDateChange={(date) => {
-            console.log('>>>>>', date);
-          }}
         />
         <TouchableOpacity
           style={styles.buttonContainer}
