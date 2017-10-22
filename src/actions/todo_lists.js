@@ -17,8 +17,6 @@ export function updateTodoListFormData(data) {
 
 export function openTodoList(todoListId) {
   return (dispatch) => {
-    console.log('..........', todoListId, dispatch);
-
     dispatch(updateTodoListId(todoListId));
     dispatch(NavigationActions.navigate({ routeName: 'Todos' }));
   };

@@ -48,10 +48,7 @@ export function Login(email, password) {
       .then(response => response.json())
       .then(
         (body) => {
-          console.log('!!!!!!!', body);
-
-          setToken(body.token).then(() => {
-          });
+          setToken(body.token).then(() => {});
 
           dispatch({ type: 'UPDATE_TOKEN', payload: body.token });
           dispatch(NavigationActions.navigate({ routeName: 'TodoLists' }));
