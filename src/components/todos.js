@@ -34,13 +34,17 @@ const styles = StyleSheet.create({
 
 
 class Todos extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleRefresh = this.handleRefresh.bind(this);
+  }
+
   componentDidMount() {
     const { fetchTodos, updateToken } = this.props;
     const { token } = this.props.loginReducer;
     const { todoListId } = this.props.todosReducer;
     const { Navigate } = this.props;
-
-    this.handleRefresh = this.handleRefresh.bind(this);
 
     if (token === null) {
       getToken().then((tokenFromStorage) => {

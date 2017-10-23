@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
 });
 
 class TodoListItem extends React.PureComponent {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
     this.handlePress = this.handlePress.bind(this);
     this.handleLongPress = this.handleLongPress.bind(this);
 

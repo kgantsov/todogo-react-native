@@ -34,12 +34,15 @@ const styles = StyleSheet.create({
 
 
 class TodoLists extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleRefresh = this.handleRefresh.bind(this);
+  }
   componentDidMount() {
     const { FetchTodoLists, updateToken } = this.props;
     const { token } = this.props.loginReducer;
     const { Navigate } = this.props;
-
-    this.handleRefresh = this.handleRefresh.bind(this);
 
     if (token === null) {
       getToken().then((tokenFromStorage) => {

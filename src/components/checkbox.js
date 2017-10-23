@@ -4,7 +4,9 @@ import { TouchableOpacity } from 'react-native';
 
 
 class CheckBox extends React.PureComponent {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
     this.handlePress = this.handlePress.bind(this);
   }
 

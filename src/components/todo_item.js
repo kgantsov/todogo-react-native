@@ -30,7 +30,9 @@ const priorityColors = {
 };
 
 class TodoItem extends React.PureComponent {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
     this.handlePress = this.handlePress.bind(this);
     this.handleLongPress = this.handleLongPress.bind(this);
 
