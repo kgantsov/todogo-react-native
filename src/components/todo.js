@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
 import { getToken } from '../actions/login';
+import DateTimePicker from 'react-native-osd-datetimepicker';
 
 
 const styles = StyleSheet.create({
@@ -88,6 +89,15 @@ class Todo extends Component {
           }}
           value={this.props.todosReducer.todo.note}
         />
+        <DateTimePicker
+          date={this.props.todosReducer.todo.dead_line_at}
+          onChange={(value) => {
+            this.props.updateTodo({
+              ...this.props.todosReducer.todo,
+              dead_line_at: new Date(Date.parse(value)),
+            });
+          }}
+        />
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => {
@@ -105,7 +115,7 @@ Todo.propTypes = {
   fetchTodos: React.PropTypes.func.isRequired,
   saveTodo: React.PropTypes.func.isRequired,
   updateToken: React.PropTypes.func.isRequired,
-  Navigate: React.PropTypes.func.isRequired,
+  Navigate: React.PropTypes.func,
   updateTodo: React.PropTypes.func.isRequired,
   loginReducer: React.PropTypes.shape({
     token: React.PropTypes.string,
@@ -116,7 +126,7 @@ Todo.propTypes = {
     todos: React.PropTypes.array.isRequired,
     todo: React.PropTypes.shape({
       title: React.PropTypes.string,
-      priority: React.PropTypes.string,
+      priority: React.PropTypes.number,
       note: React.PropTypes.string,
     }),
   }).isRequired,

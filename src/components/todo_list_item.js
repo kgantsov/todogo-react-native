@@ -60,7 +60,7 @@ TodoListItem.propTypes = {
   onDeleteItem: React.PropTypes.func.isRequired,
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  Navigate: React.PropTypes.func.isRequired,
+  Navigate: React.PropTypes.func,
 };
 
 export default TodoListItem;

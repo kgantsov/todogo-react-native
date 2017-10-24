@@ -109,7 +109,7 @@ TodoLists.propTypes = {
   updateToken: React.PropTypes.func.isRequired,
   openTodoList: React.PropTypes.func.isRequired,
   deleteTodoList: React.PropTypes.func.isRequired,
-  Navigate: React.PropTypes.func.isRequired,
+  Navigate: React.PropTypes.func,
   updateTodoListFormData: React.PropTypes.func.isRequired,
   CreateTodoList: React.PropTypes.func.isRequired,
   loginReducer: React.PropTypes.shape({

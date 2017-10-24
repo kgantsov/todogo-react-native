@@ -16,8 +16,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  dispatch: React.PropTypes.func.isRequired,
-  nav: React.PropTypes.shape.isRequired,
+  dispatch: React.PropTypes.func,
+  // nav: React.PropTypes.shape,
 };
 
 const mapStateToProps = state => ({
