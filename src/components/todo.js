@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, View, Picker } from 'react-native';
 import { getToken } from '../actions/login';
 import DateTimePicker from 'react-native-osd-datetimepicker';
 
@@ -27,6 +27,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#5cb85c',
     paddingVertical: 10,
+    marginTop: 20,
+  },
+  priorityContainer: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 10,
+    marginBottom: 20,
   },
   buttonText: {
     textAlign: 'center',
@@ -36,6 +42,10 @@ const styles = StyleSheet.create({
     height: 1,
     width: '100%',
     backgroundColor: '#414c59',
+  },
+  dateTimePicker: {
+    borderRadius: 0,
+    marginBottom: 20,
   },
 });
 
@@ -89,7 +99,27 @@ class Todo extends Component {
           }}
           value={this.props.todosReducer.todo.note}
         />
+        <Picker
+          style={styles.priorityContainer}
+          selectedValue={this.props.todosReducer.todo.priority}
+          onValueChange={(itemValue) => {
+            this.props.updateTodo({
+              ...this.props.todosReducer.todo,
+              priority: itemValue,
+            });
+          }}
+        >
+          <Picker.Item label="Irrelevant" value={1} />
+          <Picker.Item label="Extra low" value={2} />
+          <Picker.Item label="Low" value={3} />
+          <Picker.Item label="Normal" value={4} />
+          <Picker.Item label="High" value={5} />
+          <Picker.Item label="Urgent" value={6} />
+          <Picker.Item label="Super urgent" value={7} />
+          <Picker.Item label="Immediate" value={8} />
+        </Picker>
         <DateTimePicker
+          style={styles.dateTimePicker}
           date={this.props.todosReducer.todo.dead_line_at}
           onChange={(value) => {
             this.props.updateTodo({
