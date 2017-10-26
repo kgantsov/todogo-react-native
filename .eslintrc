@@ -3,7 +3,11 @@
 {
     "extends": "airbnb",
     "parser": "babel-eslint",
+    "env": {
+        "browser": true
+    },
     "rules": {
+      "jsx-a11y/href-no-hash": "off",
       "react/jsx-filename-extension": [
         1, { "extensions": [".js", ".jsx"] }
       ]
