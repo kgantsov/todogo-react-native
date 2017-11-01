@@ -158,6 +158,7 @@ Todo.propTypes = {
       title: React.PropTypes.string,
       priority: React.PropTypes.number,
       note: React.PropTypes.string,
+      dead_line_at: React.PropTypes.string,
     }),
   }).isRequired,
 };

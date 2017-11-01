@@ -112,6 +112,9 @@ class Todos extends Component {
 
 Todos.propTypes = {
   fetchTodos: React.PropTypes.func.isRequired,
+  openTodo: React.PropTypes.func.isRequired,
+  toggleCompletedTodo: React.PropTypes.func.isRequired,
+  deleteTodo: React.PropTypes.func.isRequired,
   updateToken: React.PropTypes.func.isRequired,
   Navigate: React.PropTypes.func,
   updateTodoFormData: React.PropTypes.func.isRequired,
@@ -120,6 +123,7 @@ Todos.propTypes = {
     token: React.PropTypes.string,
   }).isRequired,
   todosReducer: React.PropTypes.shape({
+    todoListId: React.PropTypes.string.isRequired,
     loading: React.PropTypes.boolean,
     todos: React.PropTypes.array.isRequired,
     todoFormData: React.PropTypes.shape({
