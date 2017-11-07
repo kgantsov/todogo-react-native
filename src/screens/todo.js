@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
 export default class TodoScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome',
+    title: 'TODO',
   };
 
   render() {

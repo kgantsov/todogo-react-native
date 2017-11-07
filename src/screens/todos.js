@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
 
 
 export default class TodosScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+  static navigationOptions({ navigation }) {
+    return { title: navigation.state.params.title };
+  }
 
   render() {
     return (

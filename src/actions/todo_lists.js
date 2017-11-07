@@ -15,10 +15,10 @@ export function updateTodoListFormData(data) {
   );
 }
 
-export function openTodoList(todoListId) {
+export function openTodoList(todoListId, title) {
   return (dispatch) => {
     dispatch(updateTodoListId(todoListId));
-    dispatch(NavigationActions.navigate({ routeName: 'Todos' }));
+    dispatch(NavigationActions.navigate({ routeName: 'Todos', params: { title, id: todoListId } }));
   };
 }
 
