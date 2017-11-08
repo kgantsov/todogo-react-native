@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
 
 
 export default class TodoScreen extends React.Component {
-  static navigationOptions = {
-    title: 'TODO',
-  };
+  static navigationOptions({ navigation }) {
+    return { title: navigation.state.params.title };
+  }
 
   render() {
     return (

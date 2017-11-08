@@ -29,7 +29,9 @@ export function updateTodoFormData(data) {
 export function openTodo(todo) {
   return (dispatch) => {
     dispatch(updateTodo(todo));
-    dispatch(NavigationActions.navigate({ routeName: 'Todo' }));
+    dispatch(
+      NavigationActions.navigate({ routeName: 'Todo', params: { title: todo.title, id: todo.id } }),
+    );
   };
 }
 
