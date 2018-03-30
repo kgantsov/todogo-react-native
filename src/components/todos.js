@@ -116,7 +116,7 @@ Todos.propTypes = {
   toggleCompletedTodo: React.PropTypes.func.isRequired,
   deleteTodo: React.PropTypes.func.isRequired,
   updateToken: React.PropTypes.func.isRequired,
-  Navigate: React.PropTypes.func,
+  Navigate: React.PropTypes.func.isRequired,
   updateTodoFormData: React.PropTypes.func.isRequired,
   createTodo: React.PropTypes.func.isRequired,
   loginReducer: React.PropTypes.shape({
