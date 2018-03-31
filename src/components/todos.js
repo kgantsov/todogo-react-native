@@ -74,7 +74,7 @@ class Todos extends Component {
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          placeholder={'Create a todo'}
+          placeholder={'Create a task'}
           returnKeyType={'go'}
           onChangeText={(text) => {
             this.props.updateTodoFormData({
